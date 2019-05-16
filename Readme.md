@@ -2,7 +2,6 @@
 A Java front-end to Spectral Instruments C++ API, plus convenience functions for constructing full structures of all
 parameters and status items.
 
-
 Installing and Running
 ----------------------
 ### Installation of Spectral Instruments Dlls
