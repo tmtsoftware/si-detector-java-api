@@ -6,7 +6,7 @@ parameters and status items.
 Installing and Running
 ----------------------
 ### Installation of Spectral Instruments Dlls
-TBW
+The project si-detector-sdk must be first installed for this API to function.  Download or clone the si-detector-sdk and follow its installation instructions.
 
 ### Installation
 Download or clone this repository.
