@@ -17,7 +17,11 @@ sbt publishLocal
 </code></pre>
 
 ### Running the Example
-The full API is in the class: SpectralInstrumentsApi.java.  A main() method is included in the class that exercises all API methods.
+The full API is in the class: SpectralInstrumentsApi.java.  
+
+The LD_LIBRARY_PATH environment variable must include /usr/local/lib.
+
+A main() method is included in the class that exercises all API methods.
 This can be executed using:
 <pre><code>
 sbt run
