@@ -16,6 +16,7 @@ public class ParameterItemInfo {
 
     List<PulldownItem> pulldownItemList;
     List<BitField> bitFieldList;
+    String postName;
 
     public ParameterItemInfo(String displayName, String[] cppRetString) throws Exception {
 
@@ -28,6 +29,10 @@ public class ParameterItemInfo {
 
         this.displayName = displayName;
 
+    }
+    public ParameterItemInfo(String displayName, String postName, String[] cppRetString) throws Exception {
+        this(displayName, cppRetString);
+        this.postName = postName;
     }
 
     public String getDisplayName() {

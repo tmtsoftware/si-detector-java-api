@@ -340,9 +340,121 @@ public class SpectralInstrumentsApi {
 
     }
 
+    // Method to bring in the command parameters
+    public static List<ParameterItemInfo> getAllCommands(int camHandle) throws Exception {
+
+        // here we just hard code the list rather than parse the XML as per Dan of SI said this list
+        // does not change, and the C API does not support reading it
+        // if this turns out to be false in the future we can key off of camHandle for differences
+
+        List<ParameterItemInfo> piiList = new ArrayList<ParameterItemInfo>();
+
+        ParameterItemInfo pio;
+
+        // ABORT
+        String[] abortCmdFields = {"", "0", "0", "0", "", "", "11"};
+        pio = new ParameterItemInfo("Abort an exposure or readout.","ABORT", abortCmdFields);
+
+        piiList.add(pio);
 
 
+        // ACQUIRE
+        String[] aquireCmdFields = {"", "0", "0", "6", "", "", "8"};
+        pio = new ParameterItemInfo("Acquire an image.","ACQUIRE", aquireCmdFields);
+        // create the pull downs and add them in
+        List<PulldownItem> pdiList = new ArrayList<PulldownItem>();
+        pdiList.add(new PulldownItem("Light", "0"));
+        pdiList.add(new PulldownItem("Dark", "1"));
+        pdiList.add(new PulldownItem("Triggered", "2"));
+        pdiList.add(new PulldownItem("Linearity", "3"));
+        pdiList.add(new PulldownItem("TDI external pacing", "4"));
+        pdiList.add(new PulldownItem("TDI internal pacing", "5"));
+        pio.setPulldownItemList(pdiList);
 
+        piiList.add(pio);
+
+        // COOLER
+        String[] coolerCmdFields = {"", "0", "0", "2", "", "", "8"};
+        pio = new ParameterItemInfo("Get/set the cooler enable flag.","COOLER", coolerCmdFields);
+        // create the pull downs and add them in
+        pdiList = new ArrayList<PulldownItem>();
+        pdiList.add(new PulldownItem("Off", "0"));
+        pdiList.add(new PulldownItem("On", "1"));
+        pio.setPulldownItemList(pdiList);
+
+        piiList.add(pio);
+
+        // MODEDEL
+        String[] modedelCmdFields = {"", "0", "0", "15", "", "", "11"};
+        pio = new ParameterItemInfo("Delete the mode at [INDEX].","MODEDEL", modedelCmdFields);
+        piiList.add(pio);
+
+        // MODEGET
+        String[] modegetCmdFields = {"", "0", "0", "15", "", "", "11"};
+        pio = new ParameterItemInfo("Read the control table from [INDEX].","MODEGET", modegetCmdFields);
+        piiList.add(pio);
+
+        // MODESET
+        String[] modesetCmdFields = {"", "0", "0", "15", "", "", "11"};
+        pio = new ParameterItemInfo("Save the control table to [INDEX].","MODESET", modesetCmdFields);
+        piiList.add(pio);
+
+        // MS_LEFT
+        String[] msleftCmdFields = {"", "0", "0", "0", "", "", "11"};
+        pio = new ParameterItemInfo("Display the remaining exposure milliseconds.","MS_LEFT", msleftCmdFields);
+        piiList.add(pio);
+
+        // OPSTAT
+        String[] opstatCmdFields = {"", "0", "0", "0", "", "", "10"};
+        pio = new ParameterItemInfo("Display the operational status.","OPSTAT", opstatCmdFields);
+
+        List<BitField> bmList = new ArrayList<BitField>();
+        bmList.add(new BitField("Trigger", 0));
+        bmList.add(new BitField("Active", 1));
+        pio.setBitFieldList(bmList);
+
+        piiList.add(pio);
+
+
+        // SHUTTER
+        String[] shutterCmdFields = {"", "0", "0", "2", "", "", "8"};
+        pio = new ParameterItemInfo("Get/set the shutter open flag.","SHUTTER", shutterCmdFields);
+
+        // create the pull downs and add them in
+        pdiList = new ArrayList<PulldownItem>();
+        pdiList.add(new PulldownItem("Close", "0"));
+        pdiList.add(new PulldownItem("Open", "1"));
+        pio.setPulldownItemList(pdiList);
+
+        piiList.add(pio);
+
+        // SUGET
+        String[] sugetCmdFields = {"", "0", "0", "0", "", "", "11"};
+        pio = new ParameterItemInfo("Read the setup table from flash.","SUGET", sugetCmdFields);
+        piiList.add(pio);
+
+        // SUSET
+        String[] susetCmdFields = {"", "0", "0", "0", "", "", "11"};
+        pio = new ParameterItemInfo("Save the setup table to flash.","SUSET", susetCmdFields);
+        piiList.add(pio);
+
+        // SYSRST
+        String[] sysrstCmdFields = {"", "0", "0", "0", "", "", "11"};
+        pio = new ParameterItemInfo("Initiate a system reset.","SYSRST", sysrstCmdFields);
+        piiList.add(pio);
+
+        // S_I_DIS
+        String[] sidisCmdFields = {"", "0", "0", "0", "", "", "11"};
+        pio = new ParameterItemInfo("Clear a status index enable bit [&apos;ALL&apos;,INDEX].","S_I_DIS", sidisCmdFields);
+        piiList.add(pio);
+
+        // S_I_EN
+        String[] sienCmdFields = {"", "0", "0", "0", "", "", "11"};
+        pio = new ParameterItemInfo("Set a status index enable bit [&apos;ALL&apos;,INDEX].","S_I_EN", sienCmdFields);
+        piiList.add(pio);
+
+        return piiList;
+    }
 
 
     public static void main(String argv[]) {
@@ -382,8 +494,8 @@ public class SpectralInstrumentsApi {
             List<NameListItem> parameterNames = getParameterNames(camHandle);
             //System.out.println(parameterNames);
 
-            ParameterItemInfo parameterItemInfo = getParameterItem(camHandle,"Exposure Time");
-            //System.out.println(parameterItemInfo);
+            ParameterItemInfo parameterItemInfo = getParameterItem(camHandle,"Acquire an image.");
+            System.out.println(parameterItemInfo);
 
             String parameterValue = getParameterValue(camHandle, "Exposure Time");
             //System.out.println(parameterValue);
