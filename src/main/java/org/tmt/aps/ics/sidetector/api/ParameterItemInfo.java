@@ -39,6 +39,10 @@ public class ParameterItemInfo {
         return displayName;
     }
 
+    public String getPostName() {
+        return postName;
+    }
+
     public String getValStr() {
         return valStr;
     }
